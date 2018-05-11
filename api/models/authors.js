@@ -2,13 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const authorsSchema = new Schema({
-    first_name : {
+    name : {
         type : String, 
+        unique :  true,
         required : [true, 'book author first name is required']
-    },
-    last_name :{
-        type : String,
-        required : [true, 'book author last name is required']
     },
 }
 );

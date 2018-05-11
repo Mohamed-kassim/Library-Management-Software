@@ -3,6 +3,8 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Books = require('../models/books');
 const Authors = require('../models/authors');
+const Publishers = require('../models/publishers');
+const Languages = require('../models/languages');
 
 
 
@@ -32,12 +34,67 @@ router.get('/', function (req,res) {
 } );
 
 
-router.post('/', function (req,res) {  
+router.post('/',async function (req,res) {  
     newData = req.body;
-    let authorName = newData.name;
-    Authors.find({name: auth})
-    Books.create(newData, function (err, book) { 
-        res.send(book);
+    let authorName = newData.author_name;
+    let publisherName = newData.publisher_name;
+    let languageName = newData.language_name;
+    let authorId;
+    let publisherId;
+    let languageId;
+    await Authors.find({name: authorName}, function (err, author) { 
+        console.log(author);
+        authorId = author[0]._id;
+     })
+     console.log(authorId);
+    if (authorId === undefined){
+        console.log("fafsdf")
+        //create author 
+        await Authors.create({name : authorName});
+        await Authors.find({name: authorName}, function (err, author) { 
+        authorId = author[0]._id;
+        })
+     }
+     await Publishers.find({name: publisherName}, function (err, publisher) { 
+        publisherId = publisher[0]._id;
+     })
+    if (publisherId === undefined){
+        //create author 
+    await Publishers.create({name : publisherName, email : "default ", telephone_number : 522});
+    await Publishers.find({name: publisherName}, function (err, publisher) { 
+        publisherId = publisher[0]._id;
+     })
+     }
+     await Languages.find({name: languageName}, function (err, language) { 
+        languageId = language[0]._id;
+     })
+    if (languageId === undefined){
+        //create author 
+    await Languages.create({name : languageName});
+    await Languages.find({name: languageName}, function (err, language) { 
+        languageId = language[0]._id;
+     })
+     }
+    console.log(authorId);
+    console.log(publisherId);
+    console.log(languageId);
+    let bookdata = {
+        name : newData.name,
+        isbn : newData.isbn,
+        author_id : authorId,
+        Publisher_id : publisherId,
+        edition : newData.edition,
+        book_shelf : newData.book_shelf,
+        row_number : newData.row_number,
+        column_number : newData.column_number,
+        description : newData.description,
+        available : newData.available,
+        language_id :languageId
+        
+    };
+    await Books.create(bookdata, function (err, book) { 
+        console.log(bookdata);
+        res.send(err);
 });
 });
 

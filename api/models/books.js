@@ -12,15 +12,15 @@ const bookSchema = new Schema({
         required : [true, 'book isbn is required']
     },
     author_id :{
-        type : Number,
+        type : String,
         required : [true, 'book author is required']
     },
     Publisher_id :{
-        type : Number,
+        type : String,
         required : [true, 'book author is required']
     },
     edition :{
-        type : Number,
+        type : String,
         required : [true, 'book edition is required']
     },
     book_shelf :{
@@ -43,7 +43,8 @@ const bookSchema = new Schema({
         default : true
     },
     language_id : {
-        type : Number,
+        type : String,
+        required : [true, 'book author is required']
     }
 
 }

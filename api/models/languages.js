@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const languagesSchema = new Schema({
-    language :{
+    name :{
         type : String,
     },
 }

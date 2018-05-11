@@ -1,0 +1,30 @@
+// book json
+{
+	"name" : "kassim",
+	"isbn" : "255",
+	"author_id" : 255,
+	"Publisher_id" : 255,
+	"edition" : 355,
+	"book_shelf" : "A255",
+	"row_number" : 355,
+	"column_number" : 355,
+    "description" : "fuck habila 355",
+    "available" : true,
+    "language_id" : "2332"
+    
+},
+// authors json
+
+{
+	"first_name" : "545ss4545",
+	"last_name" : "2dsfaf55",
+}, 
+// branches 
+{
+	"issue_id" : "545ss4545",
+	"member_id" : "255",
+	"user_id" : 255,
+	"date_issued" : 255,
+	"isbn" : 355,
+	"issue_type" : "A255"
+}

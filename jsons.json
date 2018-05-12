@@ -45,9 +45,9 @@
 
 // members 
 {
-	"name" : "employer",
-	"branch_name" : "employer",
-	"telephone_number" : "employer",
+	"name" : "kassim",
+	"branch_name" : "branch2",
+	"telephone_number" : "01020304050"
 }
 
 //users 

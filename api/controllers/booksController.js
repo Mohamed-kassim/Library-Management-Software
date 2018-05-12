@@ -45,6 +45,20 @@ router.get('/', function (req,res) {
     
 } );
 
+router.post('/search', function (req,res) {
+    var name = req.body.name;
+    Books.find({name:name},async function (err, books) {
+        var arr = [];
+        for(var i=0;i<books.length;i++){
+            var x = await Authors.find({_id:books[i].author_id});
+            arr.push(x[0].name); 
+        };
+        res.render("index",{books:books,authors:arr});
+    });
+    
+    
+} );
+
 router.get('/new', async function(req, res){
     var t1 = await Authors.find({});
     var t2 = await Publishers.find({});
@@ -136,6 +150,5 @@ router.get('/issues/', function (req,res) {
         res.send(books);
     });
 } );
-
 
 module.exports = router;

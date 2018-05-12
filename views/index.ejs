@@ -1,5 +1,15 @@
 <% include header %>
 <h2>Welcome</h2>
+
+<form action="/books/search" method="POST">
+	<div class="input-group mb-3">
+	  <input type="text" class="form-control" name="name" placeholder="Book name" aria-label="search">
+	  <div class="input-group-append">
+	    <button class="btn btn-outline-secondary" type="submit">Search</button>
+	  </div>
+	</div>
+</form>	
+
 <table class="table">
   <thead class="thead-dark">
     <tr>

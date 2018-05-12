@@ -52,15 +52,16 @@ router.post('/',async function (req,res) {
     await Authors.find({name: authorName}, async function (err, author) { 
         console.log(author);
         if (author[0] === undefined){
-            console.log("fafsdf")
             //create author 
             await Authors.create({name : authorName});
             await Authors.find({name: authorName}, function (err, author) { 
             authorId = author[0]._id;
+            console.log("author created  here with id ", publisherId) ;
             })
          }
          else{
             authorId = author[0]._id;
+            console.log("author is here with id ", publisherId) ;
          }
         }
     )
@@ -90,7 +91,7 @@ router.post('/',async function (req,res) {
         }
         else{
         languageId = language[0]._id;
-        console.log("language is here with id ", publisherId) ;
+        console.log("language is here with id ", languageId) ;
     }
      })
 

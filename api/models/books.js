@@ -17,7 +17,7 @@ const bookSchema = new Schema({
     },
     Publisher_id :{
         type : String,
-        required : [true, 'book author is required']
+        required : [true, 'book Publisher is required']
     },
     edition :{
         type : String,
@@ -44,7 +44,7 @@ const bookSchema = new Schema({
     },
     language_id : {
         type : String,
-        required : [true, 'book author is required']
+        required : [true, 'book language is required']
     }
 
 }

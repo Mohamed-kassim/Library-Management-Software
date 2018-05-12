@@ -46,4 +46,21 @@ router.get('/', function (req,res) {
     });
 } );
 
+// delete user
+router.delete('/:id',async function (req,res) {  
+    //members should return all books before revoking their membership
+    let userId = req.params.id;
+    criteria = {
+        _id : userId
+       };
+       Users.deleteOne(criteria, function (err) {
+        if(err){console.log("error in deleting  user ");
+        res.send("error in deleting user");}
+        else{console.log("user deleted successfully");
+        res.send("user deleted successfully");}
+       });
+
+ });
+
+
 module.exports = router;

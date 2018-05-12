@@ -8,8 +8,8 @@ const Languages = require('../models/languages');
 
 
 
-router.delete('/:isbn', function (req,res) {  
-    let isbn = req.params.isbn;
+router.delete('/:id', function (req,res) {  
+    let id = req.params.id;
     criteria = {
         isbn : isbn
        };
@@ -59,7 +59,7 @@ router.post('/',async function (req,res) {
         publisherId = publisher[0]._id;
      })
     if (publisherId === undefined){
-        //create author 
+        //create publisher 
     await Publishers.create({name : publisherName, email : "default ", telephone_number : 522});
     await Publishers.find({name: publisherName}, function (err, publisher) { 
         publisherId = publisher[0]._id;
@@ -69,7 +69,7 @@ router.post('/',async function (req,res) {
         languageId = language[0]._id;
      })
     if (languageId === undefined){
-        //create author 
+        //create Language 
     await Languages.create({name : languageName});
     await Languages.find({name: languageName}, function (err, language) { 
         languageId = language[0]._id;

@@ -20,10 +20,9 @@
 }, 
 
 // branches json
-
 {
-	"name" : "545ss4545",
-}, 
+	"name" : "branch3"
+}
 
 // issue book 
 {
@@ -47,7 +46,7 @@
 // members 
 {
 	"name" : "employer",
-	"branch_id" : "employer",
+	"branch_name" : "employer",
 	"telephone_number" : "employer",
 }
 

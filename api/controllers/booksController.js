@@ -7,15 +7,20 @@ const Publishers = require('../models/publishers');
 const Languages = require('../models/languages');
 
 
-router.delete('/:id', function (req,res) {  
+router.delete('/:id', async function (req,res) {  
     let id = req.params.id;
     criteria = {
-        isbn : isbn
+        _id : id
        };
-    
-    Books.deleteOne(criteria, function () {
-        res.send("Book deleted succesfully") 
-       });
+       var t1 = await Books.find(criteria);
+       if (t1.available == true){
+        Books.deleteOne(criteria, function () {
+            res.send("Book deleted succesfully") 
+           });
+       }
+       else{
+           res.error("book is borrowed u can't delete it ");
+       }
 
 } );
 

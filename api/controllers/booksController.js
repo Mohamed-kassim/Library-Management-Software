@@ -7,7 +7,6 @@ const Publishers = require('../models/publishers');
 const Languages = require('../models/languages');
 
 
-
 router.delete('/:id', function (req,res) {  
     let id = req.params.id;
     criteria = {
@@ -33,89 +32,80 @@ router.post('/',async function (req,res) {
     let authorName = newData.author_name;
     let publisherName = newData.publisher_name;
     let languageName = newData.language_name;
-    let authorId;
+    let authorId ;
     let publisherId;
     let languageId;
-    // await Authors.find({name: authorName}, function (err, author) { 
-    //     console.log(author);
-    //     authorId = author[0]._id;
-    //  })
-    //  console.log(authorId);
-    // if (authorId === undefined){
-    //     console.log("fafsdf")
-    //     //create author 
-    //     await Authors.create({name : authorName});
-    //     await Authors.find({name: authorName}, function (err, author) { 
-    //     authorId = author[0]._id;
-    //     })
-    //  }
+
     await Authors.find({name: authorName}, async function (err, author) { 
-        console.log(author);
         if (author[0] === undefined){
             //create author 
             await Authors.create({name : authorName});
             await Authors.find({name: authorName}, function (err, author) { 
             authorId = author[0]._id;
-            console.log("author created  here with id ", publisherId) ;
-            })
+            console.log("author created  here with id ", authorId) ;
+            }).exec();
          }
          else{
             authorId = author[0]._id;
-            console.log("author is here with id ", publisherId) ;
+            console.log("author is here with id ", authorId) ;
          }
         }
-    )
-     await Publishers.find({name: publisherName},async function (err, publisher) { 
+    ).exec();
+     await Publishers.find({name: publisherName}, async function (err, publisher) { 
         if (publisher[0] === undefined)
         {
             await Publishers.create({name : publisherName, email : "default ", telephone_number : 522});
             await Publishers.find({name: publisherName}, function (err, publisher) { 
                 publisherId = publisher[0]._id;
                 console.log("publisher created  here with id ", publisherId) ;
-             })
+             }).exec();
              
         } else{
         publisherId = publisher[0]._id;
+        
         console.log("publisher is here with id ", publisherId) ;
-    }
-     })
 
-     await Languages.find({name: languageName},async function (err, language) { 
+    }   
+     }).exec();
+
+     await Languages.find({name: languageName},await async function (err, language) { 
         if (language[0] === undefined)
         {
             await Languages.create({name : languageName});
             await Languages.find({name: languageName}, function (err, language) { 
                 languageId = language[0]._id;
-                console.log("language created  here with id ", publisherId) ;
-             })
+                console.log("language created  here with id ", languageId) ;
+             }).exec();
         }
         else{
         languageId = language[0]._id;
         console.log("language is here with id ", languageId) ;
     }
-     })
+     }).exec();
 
-    console.log(authorId);
-    console.log(publisherId);
-    console.log(languageId);
+     idObj =  {
+         authorId : authorId, 
+         publisherId :  publisherId , 
+         languageId : languageId};
+
     let bookdata = {
         name : newData.name,
         isbn : newData.isbn,
-        author_id : authorId,
-        Publisher_id : publisherId,
+        author_id : idObj.authorId,
+        Publisher_id : idObj.publisherId,
         edition : newData.edition,
         book_shelf : newData.book_shelf,
         row_number : newData.row_number,
         column_number : newData.column_number,
         description : newData.description,
         available : newData.available,
-        language_id :languageId
-        
-    };
-    await Books.create(bookdata, function (err, book) { 
+        language_id :idObj.languageId }
+
+     Books.create(bookdata, function (err, book) { 
         console.log(bookdata);
-        res.send(err);
-});
+        res.send(err); });
+
+
 });
 
 router.put('/:id', function (req,res) { 

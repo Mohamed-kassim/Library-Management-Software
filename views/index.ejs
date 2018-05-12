@@ -1,0 +1,29 @@
+<% include header %>
+<h2>Welcome</h2>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Book</th>
+      <th scope="col">Author</th>
+      <th scope="col">Edition</th>
+      <th scope="col">Available</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% let x = 1; %>
+	<% books.forEach(function(book){ %>
+		<tr>
+			<th scope="row"><%= x %></th>
+			<td><%= book.name %></td>
+			<td><%= authors[x-1] %></td>
+			<td><%= book.edition %></td>
+			<td><%= book.available %></td>
+		</tr>
+	<% x=x+1; }); %>
+  </tbody>
+</table>
+<hr>
+<a class="btn btn-dark" href="books/new">Add Book</a>
+<a class="btn btn-dark" href="books/newAuthor">Add Author</a>
+<% include footer %>

@@ -1,0 +1,80 @@
+<% include header %>
+<h1>add new book</h1>
+
+<form action="/books" method="POST">
+	<div class="row">
+		<div class="col-6">
+			<div class="form-group">
+				<label for="name">Book name</label>
+				<input type="text" class="form-control" name="name" id="name" placeholder="book name">
+			</div>
+
+			<div class="form-group">
+				<label for="isbn">ISBN</label>
+				<input type="text" class="form-control" name="isbn" id="isbn" placeholder="ISBN">
+			</div>
+
+			<div class="form-group">
+				<label for="edition">Edition</label>
+				<input type="text" class="form-control" name="edition" id="edition" placeholder="#edition">
+			</div>
+			
+			<div class="form-group">
+				<label for="author">Author</label>
+				<select class="custom-select" name="author" id="author">
+					<option selected>Select Author</option>
+					<% authors.forEach(function(author){ %>
+						<option value="<%= author.name %>"><%= author.name %></option>
+					<%  }); %>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="publisher">Publisher</label>
+				<select class="custom-select" name="publisher" id="publisher">
+					<option selected>Select Publisher</option>
+					<% publishers.forEach(function(publisher){ %>
+						<option value="<%= publisher.name %>"><%= publisher.name %></option>
+					<%  }); %>
+				</select>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="form-group">
+				<label for="language">Language</label>
+				<select class="custom-select" name="language" id="language">
+					<option selected>Select language</option>
+					<% languages.forEach(function(language){ %>
+						<option value="<%= language.name %>"><%= language.name %></option>
+					<%  }); %>
+				</select>
+			</div>
+
+		 	<div class="form-group">
+				<label for="shelf">Shelf</label>
+				<input type="text" class="form-control" name="shelf" id="shelf" placeholder="#shelf">
+			</div>
+
+			<div class="form-group">
+				<label for="row">Row</label>
+				<input type="text" class="form-control" name="row" id="row" placeholder="#row">
+			</div>
+
+			<div class="form-group">
+				<label for="col">Column</label>
+				<input type="text" class="form-control" name="col" id="col" placeholder="#column">
+			</div>
+
+			<div class="form-group">
+				<label for="description">Description</label>
+				<input type="text" class="form-control" name="description" id="description" placeholder="description">
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<button class="btn btn-lg btn-primary btn-block">Submit</button>
+	</div>
+</form>
+
+<% include footer %>
+	

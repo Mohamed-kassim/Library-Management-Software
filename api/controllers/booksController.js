@@ -19,19 +19,46 @@ router.delete('/:id', function (req,res) {
 
 } );
 
+router.get('/newAuthor',function(req,res){
+    res.render("addAuthor");
+});
+
+router.post('/author',function(req,res){
+    var name= req.body.name;
+    console.log(name);
+    Authors.create({name:name}, function(err,author){
+        if(err){console.log("author Create sucsess ERROR");}
+        else{console.log("author Create sucsess");}
+    });
+    res.redirect("/books/newAuthor");
+});
 
 router.get('/', function (req,res) {  
-    Books.find({},function (err, books) {  
-        res.send(books);
+    Books.find({},async function (err, books) {
+        var arr = [];
+        for(var i=0;i<books.length;i++){
+            var x = await Authors.find({_id:books[i].author_id});
+            arr.push(x[0].name); 
+        };
+        res.render("index",{books:books,authors:arr});
     });
+    
 } );
+
+router.get('/new', async function(req, res){
+    var t1 = await Authors.find({});
+    var t2 = await Publishers.find({});
+    var t3 = await Languages.find({});
+    res.render("addBook",{authors:t1,publishers:t2,languages:t3});
+});
 
 // create books
 router.post('/',async function (req,res) {  
-    newData = req.body;
-    let authorName = newData.author_name;
-    let publisherName = newData.publisher_name;
-    let languageName = newData.language_name;
+    var newData = req.body;
+
+    let authorName = newData.author;
+    let publisherName = newData.publisher;
+    let languageName = newData.language;
     let authorId ;
     let publisherId;
     let languageId;
@@ -49,21 +76,21 @@ router.post('/',async function (req,res) {
         author_id : t1,
         Publisher_id : t2,
         edition : newData.edition,
-        book_shelf : newData.book_shelf,
-        row_number : newData.row_number,
-        column_number : newData.column_number,
+        book_shelf : newData.shelf,
+        row_number : newData.row,
+        column_number : newData.col,
         description : newData.description,
-        available : newData.available,
+        available : true,
         language_id : t3 };
 
     
     Books.create(bookdata, function (err, book) { 
-        if(err){console.log("ERROR");}
-        else{console.log("sucsess");}
+        if(err){console.log("Book Create sucsess ERROR");}
+        else{console.log("Book Create sucsess");}
         //console.log(bookdata);
         });
         
-     res.send("book Created");
+     res.redirect("/books");
 });
 
 router.put('/:id', function (req,res) { 

@@ -38,44 +38,29 @@ router.post('/',async function (req,res) {
 
     await Authors.find({name: authorName}, async function (err, author) { 
         if (author[0] === undefined){
-            //create author 
-            await Authors.create({name : authorName});
-            await Authors.find({name: authorName}, function (err, author) { 
-            authorId = author[0]._id;
-            console.log("author created  here with id ", authorId) ;
-            }).exec();
+            console.log("author is not defined");
          }
          else{
             authorId = author[0]._id;
             console.log("author is here with id ", authorId) ;
          }
         }
-    ).exec();
+    )
      await Publishers.find({name: publisherName}, async function (err, publisher) { 
         if (publisher[0] === undefined)
         {
-            await Publishers.create({name : publisherName, email : "default ", telephone_number : 522});
-            await Publishers.find({name: publisherName}, function (err, publisher) { 
-                publisherId = publisher[0]._id;
-                console.log("publisher created  here with id ", publisherId) ;
-             }).exec();
-             
+            console.log("author is not defined");  
         } else{
         publisherId = publisher[0]._id;
         
         console.log("publisher is here with id ", publisherId) ;
-
     }   
      }).exec();
 
      await Languages.find({name: languageName},await async function (err, language) { 
         if (language[0] === undefined)
         {
-            await Languages.create({name : languageName});
-            await Languages.find({name: languageName}, function (err, language) { 
-                languageId = language[0]._id;
-                console.log("language created  here with id ", languageId) ;
-             }).exec();
+            console.log("author is not defined");
         }
         else{
         languageId = language[0]._id;
@@ -83,23 +68,18 @@ router.post('/',async function (req,res) {
     }
      }).exec();
 
-     idObj =  {
-         authorId : authorId, 
-         publisherId :  publisherId , 
-         languageId : languageId};
-
     let bookdata = {
         name : newData.name,
         isbn : newData.isbn,
-        author_id : idObj.authorId,
-        Publisher_id : idObj.publisherId,
+        author_id : authorId,
+        Publisher_id : publisherId,
         edition : newData.edition,
         book_shelf : newData.book_shelf,
         row_number : newData.row_number,
         column_number : newData.column_number,
         description : newData.description,
         available : newData.available,
-        language_id :idObj.languageId }
+        language_id :languageId }
 
      Books.create(bookdata, function (err, book) { 
         console.log(bookdata);

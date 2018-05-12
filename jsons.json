@@ -35,7 +35,7 @@
 
 // job title 
 {
-	"job_title" : "employer",
+	"name" : "employer",
 }
 
 // language 
@@ -53,15 +53,10 @@
 //users 
 {
 	"name" : "kassim",
-	"job_id" : "255",
-	"branch_id" : "255",
+	"job_title" : "Manager",
+	"branch_name" : "branch2",
 	"telephone_number" : 255,
-	"address" : 555,
+	"address" : "555",
 	"pay_rate" : 555,
-	"work_hours" : 355,
-	"column_number" : 355,
-    "description" : "fuck habila 355",
-    "available" : true,
-    "language_id" : "2332"
-    
-},
+	"work_hours" : 355
+}

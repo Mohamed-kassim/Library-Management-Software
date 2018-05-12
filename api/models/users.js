@@ -11,7 +11,7 @@ const usersSchema = new Schema({
         required : [true, 'job id  is required']
     },
     branch_id :{
-        type : Number,
+        type : String,
         required : [true, 'job id is required']
     },
     telephone_number :{
@@ -19,7 +19,7 @@ const usersSchema = new Schema({
         required : [true, 'telephone number is required']
     },
     address :{
-        type : Number,
+        type : String,
         required : [true, 'address is required']
     },
     pay_rate :{

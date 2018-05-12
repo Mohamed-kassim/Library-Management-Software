@@ -1,17 +1,16 @@
 // book json
 {
-	"name" : "kassim",
-	"isbn" : "255",
-	"author_id" : 255,
-	"Publisher_id" : 255,
+	"name" : "kassdsim",
+	"isbn" : "2555454455",
+	"author_name" : "asdadsa555dddddsd",
+	"publisher_name" : "asdads5daddsd",
+	"language_name" : "asdads555addsd",
 	"edition" : 355,
 	"book_shelf" : "A255",
 	"row_number" : 355,
 	"column_number" : 355,
-    "description" : "fuck habila 355",
-    "available" : true,
-    "language_id" : "2332"
-    
+	"description" : "fuck habila 355",
+	"available" : false
 },
 // authors json
 

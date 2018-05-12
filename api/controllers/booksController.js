@@ -20,20 +20,14 @@ router.delete('/:id', function (req,res) {
 
 } );
 
-/// issue a book 
-/// get issued books data
-router.get('/issues/', function (req,res) {  
-    issuedBooks.find({},function (err, books) {  
-        res.send(books);
-    });
-} );
+
 router.get('/', function (req,res) {  
     Books.find({},function (err, books) {  
         res.send(books);
     });
 } );
 
-
+// create books
 router.post('/',async function (req,res) {  
     newData = req.body;
     let authorName = newData.author_name;
@@ -42,39 +36,64 @@ router.post('/',async function (req,res) {
     let authorId;
     let publisherId;
     let languageId;
-    await Authors.find({name: authorName}, function (err, author) { 
+    // await Authors.find({name: authorName}, function (err, author) { 
+    //     console.log(author);
+    //     authorId = author[0]._id;
+    //  })
+    //  console.log(authorId);
+    // if (authorId === undefined){
+    //     console.log("fafsdf")
+    //     //create author 
+    //     await Authors.create({name : authorName});
+    //     await Authors.find({name: authorName}, function (err, author) { 
+    //     authorId = author[0]._id;
+    //     })
+    //  }
+    await Authors.find({name: authorName}, async function (err, author) { 
         console.log(author);
-        authorId = author[0]._id;
-     })
-     console.log(authorId);
-    if (authorId === undefined){
-        console.log("fafsdf")
-        //create author 
-        await Authors.create({name : authorName});
-        await Authors.find({name: authorName}, function (err, author) { 
-        authorId = author[0]._id;
-        })
-     }
-     await Publishers.find({name: publisherName}, function (err, publisher) { 
+        if (author[0] === undefined){
+            console.log("fafsdf")
+            //create author 
+            await Authors.create({name : authorName});
+            await Authors.find({name: authorName}, function (err, author) { 
+            authorId = author[0]._id;
+            })
+         }
+         else{
+            authorId = author[0]._id;
+         }
+        }
+    )
+     await Publishers.find({name: publisherName},async function (err, publisher) { 
+        if (publisher[0] === undefined)
+        {
+            await Publishers.create({name : publisherName, email : "default ", telephone_number : 522});
+            await Publishers.find({name: publisherName}, function (err, publisher) { 
+                publisherId = publisher[0]._id;
+                console.log("publisher created  here with id ", publisherId) ;
+             })
+             
+        } else{
         publisherId = publisher[0]._id;
+        console.log("publisher is here with id ", publisherId) ;
+    }
      })
-    if (publisherId === undefined){
-        //create publisher 
-    await Publishers.create({name : publisherName, email : "default ", telephone_number : 522});
-    await Publishers.find({name: publisherName}, function (err, publisher) { 
-        publisherId = publisher[0]._id;
-     })
-     }
-     await Languages.find({name: languageName}, function (err, language) { 
+
+     await Languages.find({name: languageName},async function (err, language) { 
+        if (language[0] === undefined)
+        {
+            await Languages.create({name : languageName});
+            await Languages.find({name: languageName}, function (err, language) { 
+                languageId = language[0]._id;
+                console.log("language created  here with id ", publisherId) ;
+             })
+        }
+        else{
         languageId = language[0]._id;
+        console.log("language is here with id ", publisherId) ;
+    }
      })
-    if (languageId === undefined){
-        //create Language 
-    await Languages.create({name : languageName});
-    await Languages.find({name: languageName}, function (err, language) { 
-        languageId = language[0]._id;
-     })
-     }
+
     console.log(authorId);
     console.log(publisherId);
     console.log(languageId);
@@ -111,7 +130,10 @@ router.put('/:id', function (req,res) {
        });
 } );
 
-router.post('/', async function (req,res) {  
+/// issue a book 
+/// get issued books data
+
+router.post('/issues', async function (req,res) {  
     let data = req.body;
     let id = data._id;
     let type = data.issue_type;
@@ -132,6 +154,12 @@ router.post('/', async function (req,res) {
         });
     }
 });
+
+router.get('/issues/', function (req,res) {  
+    issuedBooks.find({},function (err, books) {  
+        res.send(books);
+    });
+} );
 
 
 module.exports = router;

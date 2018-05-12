@@ -36,56 +36,34 @@ router.post('/',async function (req,res) {
     let publisherId;
     let languageId;
 
-    await Authors.find({name: authorName}, async function (err, author) { 
-        if (author[0] === undefined){
-            console.log("author is not defined");
-         }
-         else{
-            authorId = author[0]._id;
-            console.log("author is here with id ", authorId) ;
-         }
-        }
-    )
-     await Publishers.find({name: publisherName}, async function (err, publisher) { 
-        if (publisher[0] === undefined)
-        {
-            console.log("author is not defined");  
-        } else{
-        publisherId = publisher[0]._id;
-        
-        console.log("publisher is here with id ", publisherId) ;
-    }   
-     }).exec();
-
-     await Languages.find({name: languageName},await async function (err, language) { 
-        if (language[0] === undefined)
-        {
-            console.log("author is not defined");
-        }
-        else{
-        languageId = language[0]._id;
-        console.log("language is here with id ", languageId) ;
-    }
-     }).exec();
-
+    var t1 = await Authors.find({name: authorName});
+    var t2 = await Publishers.find({name: publisherName});
+    var t3 = await Languages.find({name: languageName});
+    t1 = t1[0]._id;
+    t2 = t2[0]._id;
+    t3 = t3[0]._id;
+    
     let bookdata = {
         name : newData.name,
         isbn : newData.isbn,
-        author_id : authorId,
-        Publisher_id : publisherId,
+        author_id : t1,
+        Publisher_id : t2,
         edition : newData.edition,
         book_shelf : newData.book_shelf,
         row_number : newData.row_number,
         column_number : newData.column_number,
         description : newData.description,
         available : newData.available,
-        language_id :languageId }
+        language_id : t3 };
 
-     Books.create(bookdata, function (err, book) { 
-        console.log(bookdata);
-        res.send(err); });
-
-
+    
+    Books.create(bookdata, function (err, book) { 
+        if(err){console.log("ERROR");}
+        else{console.log("sucsess");}
+        //console.log(bookdata);
+        });
+        
+     res.send("book Created");
 });
 
 router.put('/:id', function (req,res) { 
@@ -104,7 +82,7 @@ router.put('/:id', function (req,res) {
 /// issue a book 
 /// get issued books data
 
-router.post('/issues', async function (req,res) {  
+router.post('/issues/', async function (req,res) {  
     let data = req.body;
     let id = data._id;
     let type = data.issue_type;

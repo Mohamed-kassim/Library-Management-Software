@@ -1,0 +1,49 @@
+<% include partials/header %>
+<h2>Welcome</h2>
+<form action="/books/search" method="POST">
+	<div class="input-group mb-3">
+	  <input type="text" class="form-control" name="name" placeholder="User name" aria-label="search">
+	  <div class="input-group-append">
+	    <button class="btn btn-outline-secondary" type="submit">Search</button>
+	  </div>
+	</div>
+</form>	
+<div class="row">
+	<div class="col-9">
+
+		<table class="table">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">Branch</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	<% let x = 1; %>
+			<% branches.forEach(function(branch){ %>
+				<tr>
+					<th scope="row"><%= x %></th>
+					<td><%= user.name %></td>
+
+					<td>
+						<form action="/members/del" method="post">
+							<select class="custom-select" name="id" id="id" style="display: None;">
+								<option value="<%= branch._id %>">id</option>
+							</select>
+							<button class="btn btn-danger btn-sm" type="submit">Delete</button>
+						</form>
+					</td>
+				</tr>
+			<% x=x+1; }); %>
+		  </tbody>
+		</table>
+		<hr>
+	</div>
+	<div class="col-3">
+		<div class="list-group">
+			<li class="list-group-item list-group-item-dark">Manager Panel</li>
+			<a class="list-group-item list-group-item-action" href="/users/new">Add User</a>
+		</div>
+	</div>
+</div>
+<% include partials/footer %>

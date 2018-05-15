@@ -78,16 +78,31 @@ router.get('/table', function (req,res) {
     
 } );
 
-router.post('/search', function (req,res) {
+router.post('/search',async function (req,res) {
     var name = req.body.name;
-    Books.find({name:name},async function (err, books) {
-        var arr = [];
-        for(var i=0;i<books.length;i++){
-            var x = await Authors.find({_id:books[i].author_id});
-            arr.push(x[0].name); 
-        };
-        res.render("index",{books:books,authors:arr});
-    });
+    var option = req.body.option;
+    if(option == 1){
+        Books.find({name:name},async function (err, books) {
+            var arr = [];
+            for(var i=0;i<books.length;i++){
+                var x = await Authors.find({_id:books[i].author_id});
+                arr.push(x[0].name); 
+            };
+            res.render("index",{books:books,authors:arr});
+        });
+    }
+    else if(option == 2){
+        var t1 = await Authors.find({name:name});
+        t1 = t1[0]._id;
+        Books.find({author_id:t1},async function (err, books) {
+            var arr = [];
+            for(var i=0;i<books.length;i++){
+                var x = await Authors.find({_id:books[i].author_id});
+                arr.push(x[0].name); 
+            };
+            res.render("index",{books:books,authors:arr});
+        });
+    }
     
     
 } );

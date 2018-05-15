@@ -1,10 +1,14 @@
 <% include partials/header %>
 
-<form action="/books/search" method="POST">
+<form method="post" action="/books/search">
 	<div class="input-group mb-3">
 	  <input type="text" class="form-control" name="name" placeholder="Book name" aria-label="search">
 	  <div class="input-group-append">
-	    <button class="btn btn-outline-secondary" type="submit">Search</button>
+		<button class="btn btn-outline-secondary search" type="submit">Search</button>
+		<select class="custom-select" name="option">
+			<option value="1" selected>By Name</option>
+			<option value="2">By Author</option>
+		  </select>
 	  </div>
 	</div>
 </form>	

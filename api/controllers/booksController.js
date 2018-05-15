@@ -65,7 +65,7 @@ router.get('/table', function (req,res) {
             var x = await Authors.find({_id:books[i].author_id});
             arr.push(x[0].name); 
         };
-        res.render("index1",{books:books,authors:arr});
+        res.render("index",{books:books,authors:arr});
     });
     
 } );
@@ -78,7 +78,7 @@ router.post('/search', function (req,res) {
             var x = await Authors.find({_id:books[i].author_id});
             arr.push(x[0].name); 
         };
-        res.render("index1",{books:books,authors:arr});
+        res.render("index",{books:books,authors:arr});
     });
     
     

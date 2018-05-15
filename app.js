@@ -11,8 +11,12 @@ mongoose.connect('mongodb://localhost/Library');
 mongoose.Promise = global.Promise;
 
 // middlewares
+<<<<<<< HEAD
+app.use(express.static('assets'));
+=======
 
 app.set('view engine', 'ejs');
+>>>>>>> master
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
@@ -22,9 +26,15 @@ app.use('/books',require('./api/controllers/booksController') );
 app.use('/members',require('./api/controllers/membersController') );
 app.use('/users',require('./api/controllers/usersController') );
 app.use('/managers',require('./api/controllers/managersController') );
+<<<<<<< HEAD
+
+
+
+=======
 app.get('/',function(req,res){  
     res.render('home');
 });
+>>>>>>> master
 // start the server
 app.listen(process.env.port || 4000, function () {  
     console.log('hey hey hey iam listening');

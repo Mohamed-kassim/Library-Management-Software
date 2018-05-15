@@ -21,11 +21,14 @@ router.delete('/:id', async function (req,res) {
        else{
            res.error("book is borrowed u can't delete it ");
        }
-
 } );
 
 router.get('/newAuthor',function(req,res){
     res.render("addAuthor");
+});
+
+router.get('/newPublisher',function(req,res){
+    res.render("addPublisher");
 });
 
 router.post('/author',function(req,res){
@@ -38,14 +41,31 @@ router.post('/author',function(req,res){
     res.redirect("/books/newAuthor");
 });
 
-router.get('/', function (req,res) {  
+router.post('/publisher',function(req,res){
+    var name= req.body.name;
+    var email= req.body.email;
+    var number= req.body.number;
+    console.log(email);
+    Publishers.create({name:name,email:email,telephone_number:number}, function(err,author){
+        if(err){console.log("publisher Create sucsess ERROR");}
+        else{console.log("publisher Create sucsess");}
+    });
+    res.redirect("/books/newPublisher");
+});
+
+
+router.get('/', function(req,res){
+    res.render("landing");
+});
+
+router.get('/table', function (req,res) {  
     Books.find({},async function (err, books) {
         var arr = [];
         for(var i=0;i<books.length;i++){
             var x = await Authors.find({_id:books[i].author_id});
             arr.push(x[0].name); 
         };
-        res.render("index",{books:books,authors:arr});
+        res.render("index1",{books:books,authors:arr});
     });
     
 } );
@@ -58,7 +78,7 @@ router.post('/search', function (req,res) {
             var x = await Authors.find({_id:books[i].author_id});
             arr.push(x[0].name); 
         };
-        res.render("index",{books:books,authors:arr});
+        res.render("index1",{books:books,authors:arr});
     });
     
     

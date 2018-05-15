@@ -1,0 +1,26 @@
+<% include header %>
+<h1>Add new publisher</h1>
+
+<form action="/books/publisher" method="POST">
+	
+	<div class="form-group">
+		<label for="name">Publisher name</label>
+		<input type="text" class="form-control" name="name" id="name" placeholder="author name">
+	</div>
+
+	<div class="form-group">
+		<label for="email">Publisher Email</label>
+		<input type="email" class="form-control" name="email" id="email" placeholder="author@example.com">
+	</div>
+
+	<div class="form-group">
+		<label for="number">Publisher Number</label>
+		<input type="text" class="form-control" name="number" id="number" placeholder="0123456789">
+	</div>
+
+	<div class="form-group">
+		<button class="btn btn-lg btn-primary btn-block">Submit</button>
+	</div>
+</form>
+
+<% include footer %>

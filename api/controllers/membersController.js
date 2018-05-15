@@ -7,8 +7,14 @@ const Branches = require('../models/branchesTable');
 
 // vieaw all members 
 router.get('/',async function (req,res) {  
-    var t1 = await Members.find({});
-    res.render("viewMembers",{members: t1});
+    Members.find({},async function (err, members) {
+        var arr = [];
+        for(var i=0;i<members.length;i++){
+            var x = await Branches.find({_id:members[i].branch_id});
+            arr.push(x[0].name); 
+        };
+        res.render("viewMembers",{members:members,branches:arr});
+    });
 } );
 
 router.get('/new', async function(req, res){
@@ -38,9 +44,11 @@ router.post('/new',async function (req,res) {
 
 
 //  delete a member 
-router.delete('/:id',async function (req,res) {  
+router.post('/del',async function (req,res) {  
     //members should return all books before revoking their membership
-    let member_id = req.params.id;
+    let member_id = req.body.id;
+    //console.log("lalala");
+    //console.log(member_id);
     criteria = {
         _id : member_id
        };
@@ -48,12 +56,12 @@ router.delete('/:id',async function (req,res) {
        console.log(t1);
        if (t1.issue_type === undefined || t1.issue_type === "return"){
         Members.deleteOne(criteria, function () {
-            res.send("member deleted succesfully") 
+            res.redirect("/members") 
            });
        }
        else 
            res.send('member should return book before being deleted');
-       } );
+    } );
 
 
 

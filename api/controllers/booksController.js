@@ -58,6 +58,14 @@ router.get('/', function(req,res){
     res.render("landing");
 });
 
+router.post('/view', async function(req, res){
+    var id = req.body.id;
+    console.log(id);
+    var t1 = await Books.find({_id:id});
+    console.log(t1[0].name);
+    res.render("viewBook",{book:t1[0]});
+});
+
 router.get('/table', function (req,res) {  
     Books.find({},async function (err, books) {
         var arr = [];

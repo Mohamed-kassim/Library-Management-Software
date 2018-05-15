@@ -1,0 +1,60 @@
+<% include partials/header %>
+<h1>add new book</h1>
+
+<form action="/users/new" method="POST">
+	<div class="row">
+		<div class="col-6">
+			<div class="form-group">
+				<label for="name">User name</label>
+				<input type="text" class="form-control" name="name" id="name" placeholder="User name">
+			</div>
+
+			<div class="form-group">
+                <label for="job">Job</label>
+                <select class="custom-select" name="job" id="job">
+                    <option selected>Select Author</option>
+                    <% jobs.forEach(function(job){ %>
+                        <option value="<%= job._id %>"><%= job.name %></option>
+                    <%  }); %>
+                </select>
+            </div>
+			
+			<div class="form-group">
+				<label for="branch">Branch</label>
+				<select class="custom-select" name="branch" id="branch">
+					<option selected>Select Author</option>
+					<% branches.forEach(function(branch){ %>
+						<option value="<%= branch._id %>"><%= branch.name %></option>
+					<%  }); %>
+				</select>
+			</div>
+
+			<div class="form-group">
+                <label for="number">Number</label>
+                <input type="text" class="form-control" name="number" id="number" placeholder="01234567899">
+            </div>
+		</div>
+		<div class="col-6">
+		 	<div class="form-group">
+				<label for="address">Adress</label>
+				<input type="text" class="form-control" name="address" id="adress" placeholder="address">
+			</div>
+
+			<div class="form-group">
+				<label for="pay_rate">Pay Rate</label>
+				<input type="text" class="form-control" name="pay_rate" id="pay_rate" placeholder="10 egp/hour">
+			</div>
+
+			<div class="form-group">
+				<label for="work_hours">Work Hours</label>
+				<input type="text" class="form-control" name="work_hours" id="work_hours" placeholder="6">
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<button class="btn btn-lg btn-primary btn-block">Submit</button>
+	</div>
+</form>
+
+<% include partials/footer %>
+	

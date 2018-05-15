@@ -1,0 +1,19 @@
+<% include partials/header %>
+
+    
+<div class="jumbotron">
+    <div class="row">
+        <div class="col">
+            <h1 class="display-4 text-uppercase font-weight-bold"><%= book.name %></h1>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui sapiente error vero earum. Sint debitis facere assumenda illo est delectus architecto non molestias quam quia, magni exercitationem, autem aspernatur nemo.</p>
+        </div>
+        <div class="col-3 align-self-center">
+            <img class="card-img-top" src="/imgs/bg33.jpg" alt="Card image cap" >
+        </div>
+    </div>
+    <hr class="my-4">
+    <p>Shelf:<%= book.book_shelf %> | Row:<%= book.row_number%> | Column:<%= book.column_number %></p>
+    <a class="btn btn-danger btn-lg" href="#" >Delete Book</a>       
+</div>
+
+<% include partials/footer %>

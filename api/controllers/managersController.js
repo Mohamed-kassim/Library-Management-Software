@@ -60,7 +60,7 @@ router.get('/job_titels', function (req,res) {
 } );
 
 // post new job title
-router.post('/job_titels/new', async  function (req,res) {  
+router.post('/job_titels/', async  function (req,res) {  
     var name= req.body.name;
     await jobTitles.create({name:name}, function(err,job_title){
         if(err){console.log("error in creating job title ");

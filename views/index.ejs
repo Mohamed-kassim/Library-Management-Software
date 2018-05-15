@@ -13,13 +13,18 @@
 		<div class="row" >
 			<% let x = 1; %>
 			<% books.forEach(function(book){ %>
-				<div class="col col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center text-center">
+				<div class="col col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center ">
 						<div class="card mb-3" style="width: 17rem;">
 							<img class="card-img-top" src="/imgs/bg33.jpg" alt="Card image cap">
 							<div class="card-body">
 								<h5 class="card-title"><%= book.name %></h5>
-								<p class="card-text"><%= book.description %></p>
-								<a href="#" class="btn btn-primary">View book</a>
+								<p class="card-text">Author: <%= authors[x-1] %></p>
+								<form action="/books/view" method="POST">
+									<select class="custom-select" name="id" id="id" style="display: None;">
+										<option value="<%= book._id %>">id</option>
+									</select>
+									<button class="btn btn-primary btn-sm" type="submit">View Book</button>
+								</form>
 							</div>
 						</div>
 				</div>
@@ -36,9 +41,9 @@
 		</div>
 		<div class="list-group">
 				<li class="list-group-item list-group-item-dark">Manager Panel</li>
-				<a class="list-group-item list-group-item-action" href="/books/new">View Users</a>
-				<a class="list-group-item list-group-item-action" href="/books/newAuthor">View Branches</a>
-				<a class="list-group-item list-group-item-action" href="/books/newPublisher">View Jobs</a>
+				<a class="list-group-item list-group-item-action" href="/users/">View Users</a>
+				<a class="list-group-item list-group-item-action" href="#">View Branches</a>
+				<a class="list-group-item list-group-item-action" href="#">View Jobs</a>
 			</div>
 	</div>
 </div>

@@ -7,34 +7,36 @@ const jobTitles = require('../models/jobTitles');
 const Users = require('../models/users');
 
 // creatae new user
+router.get("/new",async function(req, res){
+    var t1 = await Branches.find({});
+    var t2 = await jobTitles.find({});
+    res.render("addUser",{branches:t1,jobs:t2})
+});
+
 router.post('/new', async  function (req,res) {
-    var newData = req.body;  
-    var job_title = newData.job_title;
-    var branch_name = newData.branch_name;
-
-    var t1 = await jobTitles.find({name: job_title});
-    var t2 = await Branches.find({name: branch_name});
-    t1 = t1[0]._id;
-    t2 = t2[0]._id;
-
+    var newData = req.body;
+    
     let userData = {
         name : newData.name,
-        job_id : t1,
-        branch_id : t2,
-        telephone_number : newData.telephone_number,
+        job_id : newData.job,
+        branch_id : newData.job,
+        telephone_number : newData.number,
         address : newData.address,
         pay_rate : newData.pay_rate,
         work_hours : newData.work_hours,
  }; 
 
-
     await Users.create(userData, function(err,user){
         if(err){
             console.log(err);
-        res.send("error in creating user");}
-        else{console.log("user created successfully");}
+            res.send("error in creating user");
+        }
+        else{
+            console.log("user created successfully");
+        }
     });
     res.redirect("/users");
+
 
 
 });
@@ -42,7 +44,7 @@ router.post('/new', async  function (req,res) {
 // get users
 router.get('/', function (req,res) {  
     Users.find({},function (err, users) {  
-        res.send(users);
+        res.render("viewUsers",{users:users});
     });
 } );
 

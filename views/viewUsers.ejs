@@ -2,7 +2,7 @@
 <h2>Welcome</h2>
 <form action="/books/search" method="POST">
 	<div class="input-group mb-3">
-	  <input type="text" class="form-control" name="name" placeholder="Member name" aria-label="search">
+	  <input type="text" class="form-control" name="name" placeholder="User name" aria-label="search">
 	  <div class="input-group-append">
 	    <button class="btn btn-outline-secondary" type="submit">Search</button>
 	  </div>
@@ -16,6 +16,10 @@
 		    <tr>
 		      <th scope="col">#</th>
 		      <th scope="col">Name</th>
+		      <th scope="col">Job</th>
+		      <th scope="col">Pay Rate</th>
+		      <th scope="col">Work Hours</th>
+		      <th scope="col">Adress</th>
 		      <th scope="col">Number</th>
 		      <th scope="col">Branch</th>
 		      <th scope="col">Delete</th>
@@ -23,16 +27,20 @@
 		  </thead>
 		  <tbody>
 		  	<% let x = 1; %>
-			<% members.forEach(function(member){ %>
+			<% users.forEach(function(user){ %>
 				<tr>
 					<th scope="row"><%= x %></th>
-					<td><%= member.name %></td>
-					<td><%= member.telephone_number %></td>
-					<td><%= branches[x-1] %></td>
+					<td><%= user.name %></td>
+					<td><%= user.job_ %></td>
+					<td><%= user.pay_rate %></td>
+					<td><%= user.work_hours %></td>
+					<td><%= user.address %></td>
+					<td><%= user.telephone_number %></td>
+					<td><%= user.branchd %></td>
 					<td>
 						<form action="/members/del" method="post">
 							<select class="custom-select" name="id" id="id" style="display: None;">
-								<option value="<%= member._id %>">id</option>
+								<option value="<%= user._id %>">id</option>
 							</select>
 							<button class="btn btn-danger btn-sm" type="submit">Delete</button>
 						</form>
@@ -45,8 +53,8 @@
 	</div>
 	<div class="col-3">
 		<div class="list-group">
-			<li class="list-group-item list-group-item-dark">User Panel</li>
-			<a class="list-group-item list-group-item-action" href="/members/new">Add Member</a>
+			<li class="list-group-item list-group-item-dark">Manager Panel</li>
+			<a class="list-group-item list-group-item-action" href="/users/new">Add User</a>
 		</div>
 	</div>
 </div>

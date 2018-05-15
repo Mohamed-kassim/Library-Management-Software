@@ -1,0 +1,31 @@
+<% include partials/header %>
+<h1>Add new publisher</h1>
+
+<form action="/members/new" method="POST">
+	
+	<div class="form-group">
+		<label for="name">Member name</label>
+		<input type="text" class="form-control" name="name" id="name" placeholder="Member name">
+	</div>
+
+	<div class="form-group">
+            <label for="branch_name">Branch name</label>
+            <select class="custom-select" name="branch_name" id="branch_name">
+                <option selected>Select Branch</option>
+                <% branches.forEach(function(branch){ %>
+                    <option value="<%= branch.name %>"><%= branch.name %></option>
+                <%  }); %>
+            </select>
+        </div>
+
+	<div class="form-group">
+		<label for="number">Member Number</label>
+		<input type="text" class="form-control" name="number" id="number" placeholder="0123456789">
+	</div>
+
+	<div class="form-group">
+		<button class="btn btn-lg btn-primary btn-block">Submit</button>
+	</div>
+</form>
+
+<% include partials/footer %>

@@ -5,13 +5,16 @@ const Members = require('../models/members');
 const Issues = require('../models/issuedBooks');
 const Branches = require('../models/branchesTable');
 
-// vieaw all books 
-router.get('/', function (req,res) {  
-    Members.find({},function (err, members) {  
-        if (err){res.send("cant get members")};
-        res.send(members);
-    });
+// vieaw all members 
+router.get('/',async function (req,res) {  
+    var t1 = await Members.find({});
+    res.render("viewMembers",{members: t1});
 } );
+
+router.get('/new', async function(req, res){
+    var t1 = await Branches.find({});
+    res.render("addMember",{branches: t1})
+});
 
 //Adding a member
 router.post('/new',async function (req,res) {  
@@ -21,14 +24,14 @@ router.post('/new',async function (req,res) {
     let memberdata = {
         name : newData.name,
         branch_id : t1,
-        telephone_number : newData.telephone_number
+        telephone_number : newData.number
      };
 
     await Members.create(memberdata, function (err, member) { 
         if (err){
             console.log (err);
             res.send("cant create members")}
-        else{res.send("Member Added");} 
+        else{res.redirect("/books/table");} 
         });   
     }); 
 

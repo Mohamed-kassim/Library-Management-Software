@@ -1,0 +1,44 @@
+<% include partials/header %>
+<h2>Welcome</h2>
+<form action="/books/search" method="POST">
+	<div class="input-group mb-3">
+	  <input type="text" class="form-control" name="name" placeholder="Member name" aria-label="search">
+	  <div class="input-group-append">
+	    <button class="btn btn-outline-secondary" type="submit">Search</button>
+	  </div>
+	</div>
+</form>	
+<div class="row">
+	<div class="col-9">
+
+		<table class="table">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">Name</th>
+		      <th scope="col">Number</th>
+		      <th scope="col">Branch</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	<% let x = 1; %>
+			<% members.forEach(function(member){ %>
+				<tr>
+					<th scope="row"><%= x %></th>
+					<td><%= member.name %></td>
+                    <td><%= member.telephone_number %></td>
+                    <td><%= member.branch_id %></td>
+				</tr>
+			<% x=x+1; }); %>
+		  </tbody>
+		</table>
+		<hr>
+	</div>
+	<div class="col-3">
+		<div class="list-group">
+            <li class="list-group-item list-group-item-dark">User Panel</li>
+            <a class="list-group-item list-group-item-action" href="/members/new">Add Member</a>
+		</div>
+	</div>
+</div>
+<% include partials/footer %>

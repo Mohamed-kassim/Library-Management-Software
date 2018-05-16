@@ -35,7 +35,7 @@ router.post('/register',async (req, res) => {
         username: req.body.username, 
         password : password
     }
-    await usersLoginData.create(userData);
+    user = await usersLoginData.create(userData);
     req.session.userId = user._id;
     res.json({
         message : 'user created successfully welcome ',
@@ -105,7 +105,7 @@ router.get('/logout', function(req, res, next) {
         if(err) {
           return next(err);
         } else {
-          return res.redirect('/landing');
+          return res.render('landing')
         }
       });
     }

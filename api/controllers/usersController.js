@@ -5,15 +5,24 @@ const Members = require('../models/members');
 const Branches = require('../models/branchesTable');
 const jobTitles = require('../models/jobTitles');
 const Users = require('../models/users');
+function requiresManagerLogin(req, res, next) {
+    if (req.session && req.session.userId) {
+      return next();
+    } else {
+      var err = new Error('You must be logged in as manager to view this page.');
+      err.status = 401;
+      res.render(logerror);
+    }
+  }
 
 // creatae new user
-router.get("/new",async function(req, res){
+router.get("/new",requiresManagerLogin,async function(req, res){
     var t1 = await Branches.find({});
     var t2 = await jobTitles.find({});
     res.render("addUser",{branches:t1,jobs:t2})
 });
 
-router.post('/new', async  function (req,res) {
+router.post('/new',requiresManagerLogin, async  function (req,res) {
     var newData = req.body;
     
     let userData = {
@@ -42,14 +51,14 @@ router.post('/new', async  function (req,res) {
 });
 
 // get users
-router.get('/', function (req,res) {  
+router.get('/',requiresManagerLogin, function (req,res) {  
     Users.find({},function (err, users) {  
         res.render("viewUsers",{users:users});
     });
 } );
 
 // delete user
-router.delete('/:id',async function (req,res) {  
+router.delete('/:id',requiresManagerLogin, async function (req,res) {  
     //members should return all books before revoking their membership
     let userId = req.params.id;
     criteria = {

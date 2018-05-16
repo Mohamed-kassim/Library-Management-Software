@@ -7,7 +7,16 @@ const Branches = require('../models/branchesTable');
 const jobTitles = require('../models/jobTitles');
 
 // add new library branch 
-router.post('/branches/new', async  function (req,res) {  
+function requiresManagerLogin(req, res, next) {
+    if (req.session && req.session.userId) {
+      return next();
+    } else {
+      var err = new Error('You must be logged in as manager to view this page.');
+      err.status = 401;
+      return next(err);
+    }
+  }
+router.post('/branches/new', requiresManagerLogin, async function (req,res) {  
     var name= req.body.name;
     await Branches.create({name:name}, function(err,branch){
         if(err){console.log("error in creating branch ");
@@ -21,7 +30,7 @@ router.post('/branches/new', async  function (req,res) {
 
 // get all branches
 
-router.get('/branches', function (req,res) {  
+router.get('/branches', requiresManagerLogin, function (req,res) {  
     Branches.find({},function (err, branches) { 
         if (err){res.send("cant get branches")}; 
         res.send(branches);
@@ -32,7 +41,7 @@ router.get('/branches', function (req,res) {
 
 
 //delete  branch 
-router.delete('/branches/:id', async function (req,res) {  
+router.delete('/branches/:id',requiresManagerLogin, async function (req,res) {  
     let id = req.params.id;
     criteria = {
         _id : id
@@ -50,7 +59,7 @@ router.delete('/branches/:id', async function (req,res) {
 
  //get all job titles
 
-router.get('/job_titels', function (req,res) {  
+router.get('/job_titels',requiresManagerLogin,  function (req,res) {  
     jobTitles.find({},function (err, job_titles) { 
         if (err){
             console.log(err);
@@ -60,7 +69,7 @@ router.get('/job_titels', function (req,res) {
 } );
 
 // post new job title
-router.post('/job_titels/', async  function (req,res) {  
+router.post('/job_titels/',requiresManagerLogin, async  function (req,res) {  
     var name= req.body.name;
     await jobTitles.create({name:name}, function(err,job_title){
         if(err){console.log("error in creating job title ");
@@ -70,7 +79,7 @@ router.post('/job_titels/', async  function (req,res) {
     });
 });
 
-router.delete('/job_titels/:id', async function (req,res) {  
+router.delete('/job_titels/:id',requiresManagerLogin, async function (req,res) {  
     let id = req.params.id;
     criteria = {
         _id : id

@@ -4,9 +4,17 @@ const mongoose = require('mongoose');
 const Members = require('../models/members');
 const Issues = require('../models/issuedBooks');
 const Branches = require('../models/branchesTable');
-
+function requiresManagerLogin(req, res, next) {
+    if (req.session && req.session.userId) {
+      return next();
+    } else {
+      var err = new Error('You must be logged in as manager to view this page.');
+      err.status = 401;
+      res.render(logerror);
+    }
+  }
 // vieaw all members 
-router.get('/',async function (req,res) {  
+router.get('/',requiresManagerLogin,async function (req,res) {  
     Members.find({},async function (err, members) {
         var arr = [];
         for(var i=0;i<members.length;i++){
@@ -17,13 +25,13 @@ router.get('/',async function (req,res) {
     });
 } );
 
-router.get('/new', async function(req, res){
+router.get('/new', requiresManagerLogin,async function(req, res){
     var t1 = await Branches.find({});
     res.render("addMember",{branches: t1})
 });
 
 //Adding a member
-router.post('/new',async function (req,res) {  
+router.post('/new',requiresManagerLogin,async function (req,res) {  
     newData = req.body;
     var t1 = await Branches.find({name : newData.branch_name});
     t1 = t1[0]._id;
@@ -44,7 +52,7 @@ router.post('/new',async function (req,res) {
 
 
 //  delete a member 
-router.post('/del',async function (req,res) {  
+router.post('/del',requiresManagerLogin,async function (req,res) {  
     //members should return all books before revoking their membership
     let member_id = req.body.id;
     //console.log("lalala");

@@ -23,6 +23,10 @@ function verifyToken(req,res,next) {
         res.sendStatus(403);
     }
 };
+router.get("/login",async function(req, res){
+    res.render("login");
+});
+
 router.post('/register',async (req, res) => {
     name = req.body.username ;
     password = usersLoginData.generateHash(req.body.password);
@@ -32,6 +36,7 @@ router.post('/register',async (req, res) => {
         password : password
     }
     await usersLoginData.create(userData);
+    req.session.userId = user._id;
     res.json({
         message : 'user created successfully welcome ',
         name : name
@@ -57,35 +62,29 @@ router.post('/posts',verifyToken, (req,res)=>{
 router.post('/login', (req, res)=>{
     let payload;
     let secretkey;
-    console.log(req.body);
     username = req.body.username;
     password =req.body.password;
     usersLoginData.findOne({username : username}, (err, userData)=>{
-        console.log(userData);
 
-        if (err){
+        if (err || userData == null){
             res.send('please enter a valid user name');
         }
-        console.log(userData.password);
-        console.log(usersLoginData.validPassword(password, userData.password));
         if (usersLoginData.validPassword(password, userData.password)){
             //password match
-            console.log(userData)
             payload = {
                 id : userData._id,
                 username : userData.username,
                 email : userData.email
             }
-            secretkey = userData.password;
-            jwt.sign({payload}, secretkey,(err, token)=>{
-                res.json(
-                    {
-                        message : 'welcome to our library',
-                        name : req.body.username,
-                        password : userData.password,
-                        token 
-                    }
-                )
+            req.session.userId = userData._id;
+            secret = req.session.secret;
+            console.log(secret);
+            
+            jwt.sign({payload}, secret,(err, token)=>{
+                console.log(token);
+                req.session.token = token;  
+                res.render('landing');
+                console.log(req.session);
             });
         }
         else{
@@ -99,4 +98,16 @@ router.post('/login', (req, res)=>{
     });
 
 });
+router.get('/logout', function(req, res, next) {
+    if (req.session) {
+      // delete session object
+      req.session.destroy(function(err) {
+        if(err) {
+          return next(err);
+        } else {
+          return res.redirect('/landing');
+        }
+      });
+    }
+  });
 module.exports = router

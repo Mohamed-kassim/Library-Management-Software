@@ -5,7 +5,15 @@ const Books = require('../models/books');
 const Authors = require('../models/authors');
 const Publishers = require('../models/publishers');
 const Languages = require('../models/languages');
-
+function requiresManagerLogin(req, res, next) {
+    if (req.session && req.session.userId) {
+      return next();
+    } else {
+      var err = new Error('You must be logged in as manager to view this page.');
+      err.status = 401;
+      res.render(logerror);
+    }
+  }
 
 router.delete('/:id', async function (req,res) {  
     let id = req.params.id;
@@ -23,11 +31,11 @@ router.delete('/:id', async function (req,res) {
        }
 } );
 
-router.get('/newAuthor',function(req,res){
+router.get('/newAuthor',requiresManagerLogin,function(req,res){
     res.render("addAuthor");
 });
 
-router.get('/newPublisher',function(req,res){
+router.get('/newPublisher',requiresManagerLogin,function(req,res){
     res.render("addPublisher");
 });
 
@@ -107,7 +115,7 @@ router.post('/search',async function (req,res) {
     
 } );
 
-router.get('/new', async function(req, res){
+router.get('/new',requiresManagerLogin, async function(req, res){
     var t1 = await Authors.find({});
     var t2 = await Publishers.find({});
     var t3 = await Languages.find({});
@@ -193,7 +201,7 @@ router.post('/issues/', async function (req,res) {
     }
 });
 
-router.get('/issues/', function (req,res) {  
+router.get('/issues/',requiresManagerLogin, function (req,res) {  
     issuedBooks.find({},function (err, books) {  
         res.send(books);
     });
